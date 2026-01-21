@@ -1,0 +1,618 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/* Essential theme configuration */
+@theme {
+  --font-family-sans: "Inter", system-ui, sans-serif;
+  --font-family-heading: "Space Grotesk", "Inter", sans-serif;
+
+  /* Core colors */
+  --color-primary: #4285f4;
+  --color-primary-600: #1c6ef7;
+  --color-primary-700: #0066ff;
+  --color-accent: #06b6d4;
+  --color-accent-warm: #0891b2;
+  --color-accent-cool: #0e7490;
+
+  /* Shadows */
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 50px rgba(66, 133, 244, 0.3);
+}
+
+/* Light theme (default) */
+:root {
+  --background: #ffffff;
+  --background-secondary: #fafafa;
+  --foreground: #171717;
+  --foreground-secondary: #404040;
+  --foreground-muted: #737373;
+  --card: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --primary: #4285f4;
+  --primary-hover: #1c6ef7;
+  --accent: #06b6d4;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-accent: rgba(6, 182, 212, 0.15);
+  --ring: #4285f4;
+
+  /* Button gradients - Light */
+  --btn-primary-from: #667eea;
+  --btn-primary-to: #764ba2;
+  --btn-primary-hover-from: #5a67d8;
+  --btn-primary-hover-to: #6b46c1;
+  --btn-primary-shadow: rgba(102, 126, 234, 0.4);
+  --btn-primary-shadow-hover: rgba(102, 126, 234, 0.5);
+
+  --btn-secondary-from: #ecfeff;
+  --btn-secondary-to: #06b6d4;
+  --btn-secondary-hover-from: #cffafe;
+  --btn-secondary-hover-to: #0891b2;
+  --btn-secondary-text: #0e7490;
+  --btn-secondary-text-hover: #164e63;
+  --btn-secondary-border: rgba(14, 116, 144, 0.2);
+  --btn-secondary-shadow: rgba(6, 182, 212, 0.3);
+  --btn-secondary-shadow-hover: rgba(6, 182, 212, 0.4);
+}
+
+/* Dark theme */
+.dark {
+  --background: #0a0a0a;
+  --background-secondary: #0f0f0f;
+  --foreground: #fafafa;
+  --foreground-secondary: #d4d4d4;
+  --foreground-muted: #737373;
+  --card: #0f0f0f;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --primary: #60a5fa;
+  --primary-hover: #93c5fd;
+  --accent: #67e8f9;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-accent: rgba(103, 232, 249, 0.15);
+  --ring: #60a5fa;
+
+  /* Button gradients - Dark */
+  --btn-primary-from: #4338ca;
+  --btn-primary-to: #7c3aed;
+  --btn-primary-hover-from: #3730a3;
+  --btn-primary-hover-to: #6d28d9;
+  --btn-primary-shadow: rgba(67, 56, 202, 0.4);
+  --btn-primary-shadow-hover: rgba(67, 56, 202, 0.5);
+
+  --btn-secondary-from: #083344;
+  --btn-secondary-to: #0e7490;
+  --btn-secondary-hover-from: #164e63;
+  --btn-secondary-hover-to: #0891b2;
+  --btn-secondary-text: #67e8f9;
+  --btn-secondary-text-hover: #a7f3d0;
+  --btn-secondary-border: rgba(103, 232, 249, 0.2);
+  --btn-secondary-shadow: rgba(8, 51, 68, 0.3);
+  --btn-secondary-shadow-hover: rgba(8, 51, 68, 0.4);
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family-sans);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  overflow-x: hidden;
+  font-family: var(--font-family-sans);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(66, 133, 244, 0.15);
+  color: var(--primary);
+}
+
+.dark ::selection {
+  background-color: rgba(96, 165, 250, 0.2);
+  color: var(--primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(163, 163, 163, 0.3);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(163, 163, 163, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Background utilities */
+.bg-primary-background {
+  background-color: var(--background);
+}
+
+.bg-secondary-background {
+  background-color: var(--background-secondary);
+}
+
+.bg-card {
+  background-color: var(--card);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+/* Text utilities */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-foreground-secondary {
+  color: var(--foreground-secondary);
+}
+
+.text-foreground-muted {
+  color: var(--foreground-muted);
+}
+
+/* Border utilities */
+.border-custom {
+  border: 1px solid var(--border);
+}
+
+.border-top {
+  border-top: 1px solid var(--border);
+}
+
+.border-custom-card {
+  border-color: var(--card-border);
+}
+
+.border-custom-primary {
+  border-color: var(--primary);
+}
+
+.border-accent {
+  border-color: var(--border-accent);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism */
+.glass {
+  backdrop-filter: blur(20px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.dark .glass {
+  background-color: rgba(15, 15, 15, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Shadow utilities */
+.shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+/* Background mesh */
+.bg-mesh {
+  background-image:
+    radial-gradient(at 40% 20%, rgba(66, 133, 244, 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(6, 182, 212, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(8, 145, 178, 0.15) 0px, transparent 50%);
+  transition: opacity 0.3s ease;
+}
+
+.dark .bg-mesh {
+  background-image:
+    radial-gradient(at 40% 20%, rgba(96, 165, 250, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(103, 232, 249, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(103, 232, 249, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(14, 116, 144, 0.1) 0px, transparent 50%);
+}
+
+/* Container utilities */
+.container-narrow {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.container-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.container-wide {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-narrow,
+  .container-content,
+  .container-wide {
+    padding: 0 2rem;
+  }
+}
+
+/* Section spacing */
+.section-y {
+  padding: 5rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-y {
+    padding: 8rem 0;
+  }
+}
+
+/* Card component */
+.card-modern {
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark .card-modern {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-modern:hover {
+  /* transform: translateY(-8px); */
+  box-shadow: var(--shadow-float);
+  border-color: var(--border-accent);
+}
+
+/* Button system - Uses CSS variables for automatic theme switching */
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s;
+}
+
+.btn:hover::after {
+  left: 100%;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Primary Button - Auto theme switching via CSS variables */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--btn-primary-from) 0%,
+    var(--btn-primary-to) 100%
+  );
+  color: #ffffff;
+  box-shadow: 0 4px 20px var(--btn-primary-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(
+    135deg,
+    var(--btn-primary-hover-from) 0%,
+    var(--btn-primary-hover-to) 100%
+  );
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px var(--btn-primary-shadow-hover);
+}
+
+/* Secondary Button - Auto theme switching via CSS variables */
+.btn-secondary {
+  background: linear-gradient(
+    135deg,
+    var(--btn-secondary-from) 0%,
+    var(--btn-secondary-to) 100%
+  );
+  color: var(--btn-secondary-text);
+  /* border: 1px solid var(--btn-secondary-border); */
+  box-shadow: 0 2px 10px var(--btn-secondary-shadow);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(
+    135deg,
+    var(--btn-secondary-hover-from) 0%,
+    var(--btn-secondary-hover-to) 100%
+  );
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px var(--btn-secondary-shadow-hover);
+  color: var(--btn-secondary-text-hover);
+}
+
+/* Outline Button */
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+  transform: translateY(-2px);
+}
+
+.dark .btn-outline:hover {
+  color: var(--background);
+}
+
+/* Danger Button */
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.btn-ghost:hover {
+  background: var(--background-secondary);
+  transform: translateY(-1px);
+}
+
+.display-md {
+  font-family: var(--font-family-heading);
+  font-size: clamp(2rem, 5vw, 3rem); /* smaller, more professional */
+  font-weight: 600;
+  line-height: 1.2; /* better readability */
+  letter-spacing: -0.015em; /* subtle spacing */
+  color: var(--foreground);
+}
+
+.display-sm {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.heading-xl {
+  font-family: var(--font-family-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.heading-lg {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.heading-md {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--foreground);
+}
+
+.heading-sm {
+  font-family: var(--font-family-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.body-xl {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--foreground-secondary);
+}
+
+.body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--foreground-secondary);
+}
+
+.body-md {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--foreground-secondary);
+}
+
+.caption {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--foreground-muted);
+  letter-spacing: 0.01em;
+}
+
+/* Keyframe animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fade-in 0.8s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .section-y {
+    padding: 3rem 0;
+  }
+
+  .card-modern {
+    padding: 1.5rem;
+  }
+
+  .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
