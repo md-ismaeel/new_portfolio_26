@@ -10,9 +10,9 @@ export function Skeleton({ className = "", animate = true }: SkeletonProps) {
   return (
     <motion.div
       className={cn(
-        "rounded-lg bg-slate-200 dark:bg-slate-800",
+        "rounded-lg skeleton-bg",
         animate ? "animate-pulse" : "",
-        className
+        className,
       )}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -299,6 +299,189 @@ export function ContactSkeleton() {
 
           {/* Submit Button */}
           <Skeleton className="h-12 w-full rounded-xl" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// MEETING SCHEDULER SECTION SKELETON
+export function MeetingSchedulerSkeleton() {
+  return (
+    <section className="bg-mesh section-y relative overflow-hidden">
+      <div className="container-content relative z-10">
+        {/* Header */}
+        <div className="text-center mb-12 space-y-4">
+          {/* Title with Icon - inline layout */}
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <Skeleton className="h-12 w-12 rounded-xl" />
+            <Skeleton className="h-12 w-64 max-w-full rounded-xl" />
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2 max-w-2xl mx-auto px-4">
+            <Skeleton className="h-5 w-full rounded" />
+            <Skeleton className="h-5 w-full rounded" />
+            <Skeleton className="h-5 w-3/4 mx-auto rounded" />
+          </div>
+        </div>
+
+        {/* Card */}
+        <div className="max-w-3xl mx-auto">
+          <div className="card-modern glass p-4 sm:p-6 lg:p-8 space-y-8">
+            {/* Duration Selection */}
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-32 rounded" />
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {[...Array(2)].map((_, i) => (
+                  <Skeleton key={i} className="h-24 w-full rounded-xl" />
+                ))}
+              </div>
+            </div>
+
+            {/* Date & Time Selection */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="space-y-3">
+                  <Skeleton className="h-4 w-16 rounded" />
+                  <Skeleton className="h-12 w-full rounded-xl" />
+                </div>
+              ))}
+            </div>
+
+            {/* Generate Button */}
+            <div className="pt-4">
+              <Skeleton className="h-12 sm:h-14 w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// BLOG PAGE SKELETON
+export function BlogSkeleton() {
+  return (
+    <section className="bg-mesh section-y relative overflow-hidden">
+      <div className="container-wide relative z-10">
+        {/* Header */}
+        <div className="text-center mb-12 space-y-3">
+          <Skeleton className="h-12 w-full max-w-xs mx-auto rounded-xl" />
+          <Skeleton className="h-5 w-full max-w-2xl mx-auto rounded" />
+        </div>
+
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {[...Array(5)].map((_, i) => (
+            <Skeleton key={i} className="h-10 w-24 rounded-full" />
+          ))}
+        </div>
+
+        {/* Featured Post */}
+        <div className="glass card-modern shadow-float mb-16 overflow-hidden max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Image */}
+            <Skeleton className="h-64 md:h-full w-full" />
+
+            {/* Content */}
+            <div className="p-8 space-y-4">
+              {/* Meta */}
+              <div className="flex items-center gap-3">
+                <Skeleton className="h-6 w-20 rounded-full" />
+                <Skeleton className="h-4 w-24 rounded" />
+                <Skeleton className="h-4 w-2 rounded" />
+                <Skeleton className="h-4 w-16 rounded" />
+              </div>
+
+              {/* Title */}
+              <div className="space-y-2">
+                <Skeleton className="h-8 w-full rounded" />
+                <Skeleton className="h-8 w-3/4 rounded" />
+              </div>
+
+              {/* Excerpt */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full rounded" />
+                <Skeleton className="h-4 w-full rounded" />
+                <Skeleton className="h-4 w-2/3 rounded" />
+              </div>
+
+              {/* Author */}
+              <div className="flex items-center gap-3 pt-2">
+                <Skeleton className="h-10 w-10 rounded-full" />
+                <div className="space-y-1">
+                  <Skeleton className="h-4 w-24 rounded" />
+                  <Skeleton className="h-3 w-16 rounded" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Blog Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="card-modern overflow-hidden">
+              {/* Image */}
+              <Skeleton className="h-48 w-full" />
+
+              {/* Content */}
+              <div className="p-6 space-y-4">
+                {/* Meta */}
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-6 w-20 rounded-full" />
+                  <Skeleton className="h-4 w-16 rounded" />
+                </div>
+
+                {/* Title */}
+                <div className="space-y-2">
+                  <Skeleton className="h-6 w-full rounded" />
+                  <Skeleton className="h-6 w-3/4 rounded" />
+                </div>
+
+                {/* Excerpt */}
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-full rounded" />
+                  <Skeleton className="h-4 w-full rounded" />
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-4 border-top">
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-4 w-20 rounded" />
+                  </div>
+                  <Skeleton className="h-4 w-16 rounded" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Load More Button */}
+        <div className="flex justify-center mb-16">
+          <Skeleton className="h-12 w-48 rounded-xl" />
+        </div>
+
+        {/* Newsletter Section */}
+        <div className="max-w-2xl mx-auto">
+          <div className="card-modern glass p-8 sm:p-12 space-y-6 text-center">
+            {/* Title */}
+            <Skeleton className="h-10 w-48 mx-auto rounded-xl" />
+
+            {/* Description */}
+            <div className="space-y-2 max-w-xl mx-auto">
+              <Skeleton className="h-5 w-full rounded" />
+              <Skeleton className="h-5 w-3/4 mx-auto rounded" />
+            </div>
+
+            {/* Form */}
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Skeleton className="flex-1 h-12 rounded-lg" />
+              <Skeleton className="h-12 w-full sm:w-32 rounded-lg" />
+            </div>
+          </div>
         </div>
       </div>
     </section>

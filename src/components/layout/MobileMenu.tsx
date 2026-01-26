@@ -140,6 +140,7 @@ export function MobileMenu({ className = "" }: MobileMenuProps) {
                         >
                           <NavLink
                             to={href}
+                            onClick={toggleMenu}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={label}

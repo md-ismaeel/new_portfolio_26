@@ -1,5 +1,5 @@
-import { type MotionProps, type Variants, motion, useInView } from "motion/react";
-export { motion, useInView };
+import { type MotionProps, type Variants, motion, useInView, AnimatePresence } from "motion/react";
+export { motion, useInView, AnimatePresence };
 
 // ============================================
 // ENTRANCE ANIMATIONS (Modern & Smooth)

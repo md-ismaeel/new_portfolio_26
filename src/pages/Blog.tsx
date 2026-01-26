@@ -1,71 +1,9 @@
 import React, { useState } from 'react';
 import { motion, useInView, fadeInUp, staggerContainer, staggerItem, scaleIn } from '@/motion/motion';
-
-const blogPosts = [
-    {
-        id: 1,
-        title: "Getting Started with Modern Web Development",
-        excerpt: "Learn the fundamentals of building beautiful, responsive websites with the latest technologies and best practices.",
-        author: "Sarah Johnson",
-        date: "Jan 15, 2026",
-        readTime: "5 min read",
-        category: "Development",
-        image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
-        featured: true
-    },
-    {
-        id: 2,
-        title: "The Future of AI in Web Design",
-        excerpt: "Exploring how artificial intelligence is revolutionizing the way we approach user experience and interface design.",
-        author: "Michael Chen",
-        date: "Jan 12, 2026",
-        readTime: "8 min read",
-        category: "AI & Design",
-        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop"
-    },
-    {
-        id: 3,
-        title: "Building Scalable React Applications",
-        excerpt: "Best practices and architecture patterns for creating maintainable React apps that can grow with your business.",
-        author: "Emily Rodriguez",
-        date: "Jan 10, 2026",
-        readTime: "12 min read",
-        category: "React",
-        image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop"
-    },
-    {
-        id: 4,
-        title: "CSS Grid vs Flexbox: When to Use Each",
-        excerpt: "A comprehensive guide to understanding the differences and use cases for CSS Grid and Flexbox layouts.",
-        author: "David Kim",
-        date: "Jan 8, 2026",
-        readTime: "6 min read",
-        category: "CSS",
-        image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&h=600&fit=crop"
-    },
-    {
-        id: 5,
-        title: "Optimizing Web Performance in 2026",
-        excerpt: "Techniques and tools to ensure your website loads fast and provides an excellent user experience.",
-        author: "Lisa Wang",
-        date: "Jan 5, 2026",
-        readTime: "10 min read",
-        category: "Performance",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
-    },
-    {
-        id: 6,
-        title: "Understanding TypeScript Generics",
-        excerpt: "Master TypeScript generics to write more flexible and reusable code with complete type safety.",
-        author: "Alex Thompson",
-        date: "Jan 3, 2026",
-        readTime: "7 min read",
-        category: "TypeScript",
-        image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=600&fit=crop"
-    }
-];
-
-const categories = ["All", "Development", "AI & Design", "React", "CSS", "Performance", "TypeScript"];
+import { BlogPosts, categories } from '@/data/blog';
+import { BackgroundBlobs } from '@/components/effects/BackgroundBlobs';
+import Button from '@/components/ui/Button';
+import { ArrowRight } from 'lucide-react';
 
 export default function Blog() {
     const [selectedCategory, setSelectedCategory] = useState("All");
@@ -73,20 +11,19 @@ export default function Blog() {
     const isInView = useInView(ref, { once: true });
 
     const filteredPosts = selectedCategory === "All"
-        ? blogPosts
-        : blogPosts.filter(post => post.category === selectedCategory);
+        ? BlogPosts
+        : BlogPosts.filter(post => post.category === selectedCategory);
 
-    const featuredPost = blogPosts.find(post => post.featured);
+    const featuredPost = BlogPosts.find(post => post.featured);
     const regularPosts = filteredPosts.filter(post => !post.featured);
 
     return (
-        <div className="relative min-h-screen bg-primary-background">
-            {/* Background mesh */}
-            <div className="absolute inset-0 bg-mesh opacity-30" />
+        <section className="bg-mesh section-y relative overflow-hidden">
+            <BackgroundBlobs opacity="normal" blur="light" />
 
             {/* Hero Section */}
             <motion.section
-                className="relative section-y"
+                className="relative"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
@@ -125,8 +62,8 @@ export default function Blog() {
                                 variants={staggerItem}
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === category
-                                        ? 'bg-primary text-white shadow-glow'
-                                        : 'bg-card text-foreground-secondary border-custom hover:border-primary'
+                                    ? 'bg-primary text-white shadow-glow'
+                                    : 'bg-card text-foreground-secondary border-custom hover:border-primary'
                                     }`}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -192,7 +129,7 @@ export default function Blog() {
             </motion.section>
 
             {/* Blog Grid */}
-            <section className="relative pb-20">
+            <div className="relative pb-20">
                 <div className="container-content">
                     <motion.div
                         ref={ref}
@@ -214,7 +151,7 @@ export default function Blog() {
                                         alt={post.title}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 </div>
                                 <div className="p-6">
                                     <div className="flex items-center gap-3 mb-3">
@@ -250,21 +187,15 @@ export default function Blog() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8 }}
-                        className="flex justify-center mt-12"
+                        className="flex justify-center mt-12 w-52 mx-auto"
                     >
-                        <motion.button
-                            className="btn btn-primary"
-                            whileHover={{ scale: 1.05, y: -3 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
+                        <Button variant='primary' size='sm'>
                             Load More Posts
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </motion.button>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
                     </motion.div>
                 </div>
-            </section>
+            </div>
 
             {/* Newsletter Section */}
             <motion.section
@@ -302,6 +233,6 @@ export default function Blog() {
                     </motion.div>
                 </div>
             </motion.section>
-        </div>
+        </section>
     );
 }

@@ -5,19 +5,22 @@ import RootLayout from "@/layout/layout";
 import Wrapper from "@/layout/Wrapper";
 import {
     AboutSkeleton,
+    BlogSkeleton,
     ContactSkeleton,
     ExperienceSkeleton,
+    MeetingSchedulerSkeleton,
     ProjectsSkeleton,
     SkillsSkeleton,
 } from "@/components/skeletons/skeleton";
 import NotFound from "@/components/common/NotFound";
-// import Blog from "@/pages/Blog";
 
 const About = lazy(() => import("@/pages/About"));
 const Skills = lazy(() => import("@/pages/Skills"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Experience = lazy(() => import("@/pages/Experience"));
 const Contact = lazy(() => import("@/pages/Contact"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const MeetingScheduler = lazy(() => import("@/pages/GoogleMeet"))
 
 export const routes = createBrowserRouter([
     {
@@ -72,9 +75,18 @@ export const routes = createBrowserRouter([
             {
                 path: "/blog",
                 element: (
-                    <Suspense fallback={"Loading"}>
-                        <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div>
-                        {/* <Blog/> */}
+                    <Suspense fallback={<BlogSkeleton />}>
+                        <Blog />
+                    </Suspense>
+                ),
+            },
+
+            {
+                path: "/google",
+                element: (
+                    <Suspense fallback={<MeetingSchedulerSkeleton />}>
+                        {/* <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div> */}
+                        <MeetingScheduler />
                     </Suspense>
                 ),
             },

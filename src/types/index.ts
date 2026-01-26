@@ -16,16 +16,15 @@ export interface Project {
 }
 
 export interface BlogPost {
-    id: string
-    title: string
-    excerpt: string
-    content: string
-    image?: string
-    tags: string[]
-    published: boolean
-    createdAt: Date
-    updatedAt: Date
-    readingTime: number
+    id: number;
+    title: string;
+    excerpt: string;
+    author: string;
+    date: string;
+    readTime: string;
+    category: string;
+    image: string;
+    featured: boolean;
 }
 
 export interface Skill {
