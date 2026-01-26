@@ -85,8 +85,8 @@ export const routes = createBrowserRouter([
                 path: "/google",
                 element: (
                     <Suspense fallback={<MeetingSchedulerSkeleton />}>
-                        {/* <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div> */}
-                        <MeetingScheduler />
+                        <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div>
+                        {/* <MeetingScheduler /> */}
                     </Suspense>
                 ),
             },
