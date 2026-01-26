@@ -8,7 +8,7 @@ import { NeonCursor } from "@/components/effects/MouseFollow";
 export default function RootLayout() {
     return (
         <>
-            {/* <PortfolioIntro /> */}
+            <PortfolioIntro />
             <NeonCursor />
             {/* <DynamicTitle /> */}
             <Header />

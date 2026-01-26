@@ -4,9 +4,11 @@ import { BlogPosts, categories } from '@/data/blog';
 import { BackgroundBlobs } from '@/components/effects/BackgroundBlobs';
 import Button from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/InputField';
 
 export default function Blog() {
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const [formData, setFormData] = useState({ email: '' });
     const ref = React.useRef(null);
     const isInView = useInView(ref, { once: true });
 
@@ -16,6 +18,12 @@ export default function Blog() {
 
     const featuredPost = BlogPosts.find(post => post.featured);
     const regularPosts = filteredPosts.filter(post => !post.featured);
+
+
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    }
 
     return (
         <section className="bg-mesh section-y relative overflow-hidden">
@@ -217,10 +225,15 @@ export default function Blog() {
                             Subscribe to our newsletter to get the latest articles, tutorials, and insights delivered to your inbox.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                            <input
+
+                            <Input
+                                name="email"
                                 type="email"
+                                label="Email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                required
                                 placeholder="Enter your email"
-                                className="flex-1 px-4 py-3 rounded-lg bg-background border-custom text-foreground focus:outline-none focus:border-primary transition-colors"
                             />
                             <motion.button
                                 className="btn btn-primary"

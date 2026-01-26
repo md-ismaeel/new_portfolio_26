@@ -1,5 +1,5 @@
 import { Github, Linkedin, type LucideIcon, Mail, Twitter } from 'lucide-react';
-import resume from "@/resume/Md_Ismaeel_FullStack_Resume.pdf";
+import resume from "@/resume/Ismail_FullStack_Resume.pdf";
 
 export const SITE_CONFIG = {
     name: "Md Ismail",

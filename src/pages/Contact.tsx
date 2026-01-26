@@ -1,9 +1,9 @@
 import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
-import { Mail, Send, User, CheckCircle, AlertCircle, MessageSquare } from "lucide-react";
+import { Mail, Send, User, CheckCircle, MessageSquare } from "lucide-react";
+import { Input, Textarea } from '@/components/ui/InputField';
 import { motion, useInView } from "framer-motion";
-import { textBlurIn, textReveal, staggerContainer, staggerItem, cardVariants } from "@/motion/motion";
+import { textBlurIn, textReveal, staggerContainer, cardVariants } from "@/motion/motion";
 import { BackgroundBlobs } from "@/components/effects/BackgroundBlobs";
-import { cn } from "@/lib/clsx/cn";
 import Button from "@/components/ui/Button";
 
 interface FormData {
@@ -26,8 +26,6 @@ interface TouchedFields {
   subject?: boolean;
   message?: boolean;
 }
-
-type FieldStatus = "default" | "success" | "error";
 
 const validateField = (name: string, value: string): string | null => {
   switch (name) {
@@ -117,27 +115,6 @@ export default function Contact() {
     }
   };
 
-  const getFieldStatus = (fieldName: keyof FormData): FieldStatus => {
-    if (!touchedFields[fieldName]) return "default";
-    return errors[fieldName] ? "error" : "success";
-  };
-
-  const getFieldClasses = (fieldName: keyof FormData) => {
-    const status = getFieldStatus(fieldName);
-    return cn(
-      "w-full py-4 rounded-xl transition-all duration-300 text-foreground placeholder-foreground-muted backdrop-blur-sm focus:outline-none focus:ring-2",
-      status === "error" ? "border-2 border-red-500 bg-red-50 dark:bg-red-900/10 focus:ring-red-500/20" : "",
-      status === "success" ? "border-2 border-green-500 bg-green-50 dark:bg-green-900/10 focus:ring-green-500/20" : "",
-      status === "default" ? "border border-custom bg-card/50 focus:border-primary focus:ring-primary/20" : ""
-    );
-  };
-
-  const messageCharColor = formData.message.length > 950
-    ? "text-red-500"
-    : formData.message.length > 800
-      ? "text-orange-500"
-      : "text-foreground-muted";
-
   return (
     <section className="bg-mesh section-y relative overflow-hidden">
       <BackgroundBlobs opacity="light" blur="heavy" />
@@ -168,16 +145,16 @@ export default function Contact() {
             initial="hidden"
             animate={isFormInView ? "visible" : "hidden"}
           >
-            <div className="card-modern glass shadow-card p-6 lg:p-10 relative overflow-hidden">
+            <div className="card-modern glass shadow-card relative overflow-hidden">
               {/* Form Header */}
-              <div className="mb-8 text-center">
+              <div className="mb-8 mt-3 text-center">
                 <h2 className="text-2xl font-bold gradient-text mb-2">Send a Message</h2>
                 <p className="text-sm text-foreground-secondary">Fill out the form and I'll get back to you within 24 hours</p>
               </div>
 
               <form onSubmit={handleSubmit}>
                 <motion.div
-                  className="space-y-6"
+                  className="space-y-6 lg:px-3"
                   variants={staggerContainer}
                   initial="hidden"
                   animate={isFormInView ? "visible" : "hidden"}
@@ -185,259 +162,69 @@ export default function Contact() {
                   {/* Name & Email */}
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Name Field */}
-                    <motion.div className="space-y-2" variants={staggerItem}>
-                      <label htmlFor="name" className="block text-sm font-semibold text-foreground">
-                        Full Name *
-                      </label>
-                      <div className="relative">
-                        <motion.div
-                          className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                        >
-                          <User className="w-5 h-5 text-foreground-muted" />
-                        </motion.div>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          onBlur={() => handleBlur("name")}
-                          className={cn(getFieldClasses("name"), "pl-12 pr-12")}
-                          placeholder="John Doe"
-                        />
-                        {getFieldStatus("name") === "success" && (
-                          <motion.div
-                            className="absolute right-4 top-1/2 -translate-y-1/2"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                          >
-                            <CheckCircle className="w-5 h-5 text-green-500" />
-                          </motion.div>
-                        )}
-                        {getFieldStatus("name") === "error" && (
-                          <motion.div
-                            className="absolute right-4 top-1/2 -translate-y-1/2"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                          >
-                            <AlertCircle className="w-5 h-5 text-red-500" />
-                          </motion.div>
-                        )}
-                      </div>
-                      {errors.name && touchedFields.name && (
-                        <motion.p
-                          className="text-sm text-red-500 flex items-center gap-1"
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                        >
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.name}
-                        </motion.p>
-                      )}
-                    </motion.div>
+                    <Input
+                      name="name"
+                      label="Name"
+                      placeholder="Enter your name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      onBlur={() => handleBlur('name')}
+                      error={errors?.name}
+                      touched={touchedFields?.name}
+                      icon={<User className="w-5 h-5" />}
+                      required
+                    />
 
                     {/* Email Field */}
-                    <motion.div className="space-y-2" variants={staggerItem}>
-                      <label htmlFor="email" className="block text-sm font-semibold text-foreground">
-                        Email Address *
-                      </label>
-                      <div className="relative">
-                        <motion.div
-                          className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
-                          whileHover={{ scale: 1.1, rotate: -5 }}
-                        >
-                          <Mail className="w-5 h-5 text-foreground-muted" />
-                        </motion.div>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          onBlur={() => handleBlur("email")}
-                          className={cn(getFieldClasses("email"), "pl-12 pr-12")}
-                          placeholder="john@example.com"
-                        />
-                        {getFieldStatus("email") === "success" && (
-                          <motion.div
-                            className="absolute right-4 top-1/2 -translate-y-1/2"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                          >
-                            <CheckCircle className="w-5 h-5 text-green-500" />
-                          </motion.div>
-                        )}
-                        {getFieldStatus("email") === "error" && (
-                          <motion.div
-                            className="absolute right-4 top-1/2 -translate-y-1/2"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                          >
-                            <AlertCircle className="w-5 h-5 text-red-500" />
-                          </motion.div>
-                        )}
-                      </div>
-                      {errors.email && touchedFields.email && (
-                        <motion.p
-                          className="text-sm text-red-500 flex items-center gap-1"
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                        >
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.email}
-                        </motion.p>
-                      )}
-                    </motion.div>
+                    <Input
+                      name="email"
+                      label="Email Address"
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      onBlur={() => handleBlur('email')}
+                      error={errors.email}
+                      touched={touchedFields.email}
+                      icon={<Mail className="w-5 h-5" />}
+                      required
+                    />
                   </div>
 
                   {/* Subject Field */}
-                  <motion.div className="space-y-2" variants={staggerItem}>
-                    <label htmlFor="subject" className="block text-sm font-semibold text-foreground">
-                      Subject *
-                    </label>
-                    <div className="relative">
-                      <motion.div
-                        className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <MessageSquare className="w-5 h-5 text-foreground-muted" />
-                      </motion.div>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        onBlur={() => handleBlur("subject")}
-                        className={cn(getFieldClasses("subject"), "pl-12 pr-12")}
-                        placeholder="How can I help you?"
-                      />
-                      {getFieldStatus("subject") === "success" && (
-                        <motion.div
-                          className="absolute right-4 top-1/2 -translate-y-1/2"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                        >
-                          <CheckCircle className="w-5 h-5 text-green-500" />
-                        </motion.div>
-                      )}
-                      {getFieldStatus("subject") === "error" && (
-                        <motion.div
-                          className="absolute right-4 top-1/2 -translate-y-1/2"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                        >
-                          <AlertCircle className="w-5 h-5 text-red-500" />
-                        </motion.div>
-                      )}
-                    </div>
-                    {errors.subject && touchedFields.subject && (
-                      <motion.p
-                        className="text-sm text-red-500 flex items-center gap-1"
-                        initial={{ opacity: 0, y: -5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                      >
-                        <AlertCircle className="w-4 h-4" />
-                        {errors.subject}
-                      </motion.p>
-                    )}
-                  </motion.div>
+                  <Input
+                    name="subject"
+                    label="Subject"
+                    placeholder="How can I help you?"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    onBlur={() => handleBlur('subject')}
+                    error={errors.subject}
+                    touched={touchedFields.subject}
+                    icon={<MessageSquare className="w-5 h-5" />}
+                    required
+                  />
 
                   {/* Message Field */}
-                  <motion.div className="space-y-2" variants={staggerItem}>
-                    <div className="flex justify-between items-center">
-                      <label htmlFor="message" className="block text-sm font-semibold text-foreground">
-                        Message *
-                      </label>
-                      <span className={cn("text-xs font-medium transition-colors", messageCharColor)}>
-                        {formData.message.length}/1000
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        onBlur={() => handleBlur("message")}
-                        rows={6}
-                        className={cn(getFieldClasses("message"), "px-4 pr-12 resize-y min-h-37.5")}
-                        placeholder="Tell me about your project... (minimum 20 characters)"
-                      />
-                      {getFieldStatus("message") === "success" && (
-                        <motion.div
-                          className="absolute right-4 top-4"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                        >
-                          <CheckCircle className="w-5 h-5 text-green-500" />
-                        </motion.div>
-                      )}
-                      {getFieldStatus("message") === "error" && (
-                        <motion.div
-                          className="absolute right-4 top-4"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                        >
-                          <AlertCircle className="w-5 h-5 text-red-500" />
-                        </motion.div>
-                      )}
-                    </div>
-                    {errors.message && touchedFields.message && (
-                      <motion.p
-                        className="text-sm text-red-500 flex items-center gap-1"
-                        initial={{ opacity: 0, y: -5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                      >
-                        <AlertCircle className="w-4 h-4" />
-                        {errors.message}
-                      </motion.p>
-                    )}
-                  </motion.div>
+                  <Textarea
+                    name="message"
+                    label="Message"
+                    placeholder="Your message..."
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    onBlur={() => handleBlur('message')}
+                    error={errors.message}
+                    touched={touchedFields.message}
+                    maxLength={1000}
+                    rows={6}
+                    required
+                  />
 
                   {/* Submit Button */}
-                  {/* <motion.div variants={staggerItem}>
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full btn btn-primary py-4 px-6 font-semibold rounded-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                      initial="rest"
-                      whileHover="hover"
-                      whileTap="tap"
-                      variants={buttonPrimary}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <motion.div
-                            className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5" />
-                          Send Message
-                        </>
-                      )}
-                    </motion.button>
-                  </motion.div> */}
-
                   <Button
                     type="submit"
                     disabled={isSubmitting}
                     size={"lg"}
-                    className="w-full"
+                    className="w-full mb-3"
                   >
                     {isSubmitting ? (
                       <>

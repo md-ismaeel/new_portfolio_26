@@ -19,7 +19,7 @@ const Skills = lazy(() => import("@/pages/Skills"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Experience = lazy(() => import("@/pages/Experience"));
 const Contact = lazy(() => import("@/pages/Contact"));
-const Blog = lazy(() => import("@/pages/Blog"));
+// const Blog = lazy(() => import("@/pages/Blog"));
 const MeetingScheduler = lazy(() => import("@/pages/GoogleMeet"))
 
 export const routes = createBrowserRouter([
@@ -76,7 +76,8 @@ export const routes = createBrowserRouter([
                 path: "/blog",
                 element: (
                     <Suspense fallback={<BlogSkeleton />}>
-                        <Blog />
+                        {/* <Blog /> */}
+                         <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div>
                     </Suspense>
                 ),
             },
@@ -85,8 +86,7 @@ export const routes = createBrowserRouter([
                 path: "/google",
                 element: (
                     <Suspense fallback={<MeetingSchedulerSkeleton />}>
-                        <div className="bg-mesh min-h-screen w-full display-md text-primary text-center section-y">Blog coming soon</div>
-                        {/* <MeetingScheduler /> */}
+                        <MeetingScheduler />
                     </Suspense>
                 ),
             },

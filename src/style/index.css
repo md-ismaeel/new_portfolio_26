@@ -95,9 +95,6 @@
 /* Base styles */
 * {
   box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 html {
@@ -479,9 +476,9 @@ body {
   color: var(--foreground);
 }
 
-@media (max-width:768px){
-  .display-md{
-     margin-top: 2.5rem;
+@media (max-width: 768px) {
+  .display-md {
+    margin-top: 2.5rem;
   }
 }
 
